@@ -66,10 +66,10 @@
         }
 
         function ButtonImport() {
-           // var data = JSON.parse($("#field_DataJSON").val());
-            console.log(data);
-            dat=JSON.parse($("#field_DataJSON").val());
+            // var data = JSON.parse($("#field_DataJSON").val());
+            //dat=JSON.parse($("#field_DataJSON").val());
             //DataTable.draw();
+            dat.push(JSON.parse($("#field_DataJSON").val()));
             refreshData();
             SaveData();
 
@@ -109,8 +109,51 @@
             $("#Import").click(ShowDataImport);
             $("#Export").click(ShowDataExport);
             $("#ButtonImport").click(ButtonImport);
-
+            //$("#").click()
+            $('#myTable tbody').on('click', 'tr', function () {
+                //取得當前點選的資料
+                CurrentEditItem = DataTable.row(this).data();
+                //顯示當前點選的資料
+                ShowModalUpdate();
+            });
         });
+
+function ShowModalUpdate(){
+    $("#ModalUpdate").modal();
+}
+
+        function ButtonDelete() {
+            //找出當前編輯的資料是哪一個元素
+            var n = dat.indexOf(CurrentEditItem);
+            //刪除指定位置的元素
+            dat.splice(n, 1);
+            //refresh data table
+            refreshData();
+            //儲存記憶體中的資料到localstorage
+            SaveData();
+        }
+
+        //更新資料
+        function ButtonUpdate() {
+            //取得當前編輯資料
+            var NewItem =
+                [
+                    $('#EditField_Name').val(),
+                    $('#EditField_Birthday').val(),
+                    $('#EditField_TEL').val(),
+                    $('#EditField_Email').val(),
+                    $('#EditField_Address').val()
+                ];
+            //找出當前編輯的資料是哪一個元素
+            var n = dat.indexOf(CurrentEditItem);
+            //置換
+            dat[n] = NewItem;
+            //refresh data table
+            refreshData();
+            //儲存記憶體中的資料到localstorage
+            SaveData();
+        }
+        //localStorage.clear();
     </script>
 </head>
 
@@ -148,7 +191,9 @@
                             <th>OOXX</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -216,6 +261,42 @@
         </div>
     </div>
 
+    <div class="modal fade" id="ModalUpdate">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">更新 & 刪除</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <label>姓名</label>
+                        <input id="field_Name" type="text" class="form-control" />
+                        <label>生日</label>
+                        <input id="field_Birthday" type="datetime" class="form-control" />
+                        <label>電話</label>
+                        <input id="field_TEL" type="tel" class="form-control" />
+                        <label>email</label>
+                        <input id="field_Email" type="email" class="form-control" />
+                        <label>地址</label>
+                        <input id="field_Address" type="address" class="form-control" />
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="ButtonAddNew" type="button" class="btn btn-primary">更新</button>
+                    <button id="ButtonAddNew" type="button" class="btn btn-primary">刪除</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
