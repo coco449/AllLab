@@ -32,7 +32,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  
+
   <script>
     var ans = new Array();
     var ansStr = "";
@@ -89,8 +89,7 @@
           if (inputNumArr[j] == ans[j]) {
             A++;
           }
-          else if (ans.indexOf(inputNumArr[j]) == -1) {
-            alert(ans);
+          else if (ans.indexOf(Number(inputNumArr[j])) != -1) {
             B++;
           }
         }
@@ -105,7 +104,13 @@
     function showAns() {
       var tar = document.getElementById("guessResults");
       var newnode = document.createElement("li");
-      newnode.innerHTML = A + "A" + B + "B";
+      newnode.classList.add("list-group-item");
+      if (A == 4) {
+        newnode.innerHTML = `<span class="label label-success">${A}A${B}B</span>  ${inputNumArr[0]}${inputNumArr[1]}${inputNumArr[2]}${inputNumArr[3]}`;
+      }
+      else {
+        newnode.innerHTML = `<span class="label label-danger">${A}A${B}B</span>  ${inputNumArr[0]}${inputNumArr[1]}${inputNumArr[2]}${inputNumArr[3]}`;
+      }
       tar.appendChild(newnode);
     }
 
@@ -190,14 +195,14 @@
               <br>
               <ul id="guessResults" class="list-group">
                 <li class="list-group-item">
-                  <span class="label label-danger">0A1B</span>
+                  <!-- <span class="label label-danger">0A1B</span> -->
                   <!--<span class="badge">0A1B</span>-->
-                  1234
+                  <!-- 1234 -->
                 </li>
                 <li class="list-group-item">
-                  <span class="label label-success">4A0B</span>
+                  <!--<span class="label label-success">4A0B</span>-->
                   <!--<span class="badge badge-success">4A0B</span>-->
-                  6385
+                  <!-- 6385 -->
                 </li>
               </ul>
               <div class="input-group">
