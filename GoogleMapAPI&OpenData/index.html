@@ -87,17 +87,10 @@
                     type: 'ubike',
                     title:item.sbi+'/'+item.tot,
                 };
-                if(item.sarea!="松山區"){
-                    var singleItem = {
-                    position: new google.maps.LatLng(item.lat, item.lng),
-                    type: null,
-                    title:item.sbi+'/'+item.tot,
-                };
-                }
-                /*
+                
                 if(item.sbi<10){
                     singleItem.type='ubikeblue'
-                }*/
+                }
                 data.push(singleItem);
             });
             return data;
