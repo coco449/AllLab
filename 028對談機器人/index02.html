@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>同學的code</title>
+    <title>機器人二世</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +18,7 @@
 
 
     <script>
-       function ButtonSend() {
+        function ButtonSend() {
             var html = $('#TalkContainer').html();
             var UserSay = $('#inputText').val();
             //clean
@@ -31,16 +31,25 @@
             GetAnswer(UserSay, function (ret) {
                 //如果ok
                 //show user Says...
-                let html = $('#TalkContainer').html();
-                $('#TalkContainer').html(html + '<br /><br />客服 : ' + ret.answers[0].answer);
-                //scroll to bottom
-                $('#TalkContainer').scrollTop($('#TalkContainer')[0].scrollHeight);
-            },function (ret){alert("錯誤")});
+                if (ret.answers[0].answer == "No good match found in KB.") {
+                    let html = $('#TalkContainer').html();
+                    $('#TalkContainer').html(html + '<br /><br />客服 : ' + '沒有符合的收尋');
+                    //scroll to bottom
+                    $('#TalkContainer').scrollTop($('#TalkContainer')[0].scrollHeight);
+                }
+                else {
+                    let html = $('#TalkContainer').html();
+                    $('#TalkContainer').html(html + '<br /><br />客服 : ' + ret.answers[0].answer);
+                    //scroll to bottom
+                    $('#TalkContainer').scrollTop($('#TalkContainer')[0].scrollHeight);
+                }
+
+            }, function (ret) { alert("錯誤") });
         }
 
         //取得答案，並執行whenSuccess
         //whenSuccess:傳入function作為參數
-        function GetAnswer(msg, whenSuccess,error) {
+        function GetAnswer(msg, whenSuccess, error) {
             $.ajax({
                 type: "post",
                 headers: {
@@ -52,8 +61,8 @@
                 dataType: "json",
                 success: whenSuccess,
                 error: error
-                    //如果有錯
-                
+                //如果有錯
+
             });
         }
 
