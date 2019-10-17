@@ -45,17 +45,14 @@
     function Start() {
       for (var i = 0; i < 4; i++) {
         var rdm = getRandomInt(10);
-        if (ans[0] == null) {
-          ans[0] = rdm;
+
+        if (ans.indexOf(rdm) != -1) {
+          i--;
         }
         else {
-          if (ans.indexOf(rdm) != -1) {
-            i--;
-          }
-          else {
-            ans[i] = rdm;
-          }
+          ans[i] = rdm;
         }
+
       }
     }
 
